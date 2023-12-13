@@ -13,13 +13,13 @@
     }
 </style>
 @php
-    use App\Constant\BimbinganStatus;
+    use App\Constant\StatusValidasi;
 @endphp
-<div class="modal fade" tabindex="-1" id="accept">
+<div class="modal fade" tabindex="-1" id="accJudul{{ $row->id_pendaftaran }}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detail Pra Skripsi</h5>
+                <h5 class="modal-title">Validasi Judul</h5>
 
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -37,7 +37,7 @@
                 </div>
                 <!--end::Close-->
             </div>
-            <form action="{{ route('dosen.pembimbing.bimbingan.acc', $pendaftaran->id_pendaftaran) }}" method="POST"
+            <form action="{{ route('resource.acc-judul', $row->id_pendaftaran) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body pt-0">
@@ -45,20 +45,17 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="">Status Bimbingan</label>
+                                    <label for="">Status Pendaftaran</label>
                                     <select name="status" id="" class="form-select" data-control="select2"
                                         data-placeholder="Pilih Status" required>
                                         <option value=""></option>
-                                        @foreach (BimbinganStatus::labels() as $key => $value)
-                                            <option value="{{ $key }}">
-                                                {{ $value }}</option>
+                                        @foreach (StatusValidasi::labels() as $key => $value)
+                                            @if ($key != StatusValidasi::BELUM_VALIDASI)
+                                                <option value="{{ $key }}">
+                                                    {{ $value }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Bukti Acc</label>
-                                    <input type="file" name="file" class="form-control"
-                                        accept="application/pdf, .doc,.docx,png,jpg" />
                                 </div>
                             </div>
                         </div>

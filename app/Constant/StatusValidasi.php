@@ -6,6 +6,7 @@ class StatusValidasi
 {
     const BELUM_VALIDASI = 1;
     const VALIDASI = 2;
+    const DITOLAK = 3;
 
     public static function label($id = false): string
     {
@@ -21,6 +22,7 @@ class StatusValidasi
         return [
             self::VALIDASI => "Disetujui",
             self::BELUM_VALIDASI => "Belum Validasi",
+            self::DITOLAK => "Ditolak",
         ];
     }
 
@@ -29,6 +31,7 @@ class StatusValidasi
         return [
             self::VALIDASI => 'success',
             self::BELUM_VALIDASI => 'danger',
+            self::DITOLAK => 'dark',
 
         ];
     }

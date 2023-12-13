@@ -11,6 +11,7 @@ use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class BimbinganController extends Controller
 {
@@ -178,7 +179,36 @@ class BimbinganController extends Controller
         $bimbingan = Bimbingan::whereHas('pendaftaran', function ($q) {
             $q->where('status', StatusValidasi::VALIDASI);
         })->where('id_pendaftaran', $id_pendaftaran)->first();
-        $bimbingan->update(['status' => BimbinganStatus::DITERIMA, 'bukti_acc' => $file, 'approver' => Auth::guard('dosen')->user()->id]);
+        $bimbingan->update(['status' => $request->status, 'bukti_acc' => $file, 'approver' => Auth::guard('dosen')->user()->id]);
         return redirect()->route('dosen.pembimbing.bimbingan.index')->with('success', 'Bimbingan berhasil disetujui');
+    }
+
+    public function report()
+    {
+        $user_id = auth()->user()->nim;
+        $report = Bimbingan::with(['detailBimbingan' => function ($q) {
+            $q->latest();
+        }, 'pendaftaran'])
+            ->whereHas('pendaftaran', function ($q) use ($user_id) {
+                $q->where('nim', $user_id)->where('status', StatusValidasi::VALIDASI);
+            })
+            ->first();
+        return view('mahasiswa.bimbingan.report', compact('report'));
+    }
+
+    public function downloadPdf()
+    {
+        $user_id = auth()->user()->nim;
+        $nama = auth()->user()->nama_mahasiswa;
+        $report = Bimbingan::with(['detailBimbingan' => function ($q) {
+            $q->latest();
+        }, 'pendaftaran'])
+            ->whereHas('pendaftaran', function ($q) use ($user_id) {
+                $q->where('nim', $user_id)->where('status', StatusValidasi::VALIDASI);
+            })
+            ->first();
+
+        $pdf = PDF::loadview('mahasiswa.bimbingan.pdf', ['report' => $report]);
+        return $pdf->download('Kartu Bimbingan ' . $nama . '.pdf');
     }
 }

@@ -177,7 +177,9 @@
                 </div>
             </div>
             @if ($pendaftaran->status == StatusValidasi::VALIDASI)
-                @if (empty($pendaftaran->bimbingan) || $pendaftaran->bimbingan->status == BimbinganStatus::PROSES)
+                @if (empty($pendaftaran->bimbingan) ||
+                        $pendaftaran->bimbingan->status == BimbinganStatus::PROSES ||
+                        $pendaftaran->bimbingan->status == BimbinganStatus::REVISI)
                     <div class="card">
                         <div class="table-outer shadow-sm  bg-white">
                             <div class="card-header">

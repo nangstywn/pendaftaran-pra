@@ -29,7 +29,7 @@ Route::group(['prefix' => 'resource', 'as' => 'resource.'], function () {
     route::get('pendaftaran', [ResourceController::class, 'getPendaftaran'])->name('pendaftaran');
     route::get('penguji', [ResourceController::class, 'getPenguji'])->name('penguji');
     route::get('pembimbing', [ResourceController::class, 'getPembimbing'])->name('pembimbing');
-    route::get('acc-judul', [ResourceController::class, 'accJudul'])->name('acc-judul');
+    route::post('acc-judul/{id}', [ResourceController::class, 'accJudul'])->name('acc-judul');
     route::delete('delete-judul/{id}', [ResourceController::class, 'deleteJudul'])->name('delete-judul');
 });
 Route::group(['prefix' => 'mahasiswa', 'as' => 'mahasiswa.', 'middleware' => 'auth'], function () {
@@ -45,6 +45,8 @@ Route::group(['prefix' => 'mahasiswa', 'as' => 'mahasiswa.', 'middleware' => 'au
         route::get('/', [BimbinganController::class, 'index'])->name('index');
         route::post('{id_pendaftaran}/store', [BimbinganController::class, 'store'])->name('store');
         route::get('{id_pendaftaran}/detail', [BimbinganController::class, 'detail'])->name('detail');
+        route::get('/report', [BimbinganController::class, 'report'])->name('report');
+        route::get('/report/download', [BimbinganController::class, 'downloadPdf'])->name('download');
 
         // route::get('{id_pendaftaran}/edit', [PendaftaranController::class, 'edit'])->name('edit');
         // route::post('/store', [PendaftaranController::class, 'store'])->name('store');

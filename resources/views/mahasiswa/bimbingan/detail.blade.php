@@ -177,7 +177,9 @@
                 </div>
             </div>
             @if ($pendaftaran->status == StatusValidasi::VALIDASI)
-                @if (empty($pendaftaran->bimbingan) || $pendaftaran->bimbingan->status == BimbinganStatus::PROSES)
+                @if (empty($pendaftaran->bimbingan) ||
+                        $pendaftaran->bimbingan->status == BimbinganStatus::PROSES ||
+                        $pendaftaran->bimbingan->status == BimbinganStatus::REVISI)
                     <div class="card">
                         <div class="table-outer shadow-sm  bg-white">
                             <div class="card-header">
@@ -283,7 +285,7 @@
                                                             @endif
                                                         </td>
                                                         <td>{{ $data->catatan ?? '-' }}</td>
-                                                        <td>{{ Carbon\Carbon::parse($data->tanggal)->isoFormat('D MMMM Y H:mm') ?? '-' }}
+                                                        <td>{{ Carbon\Carbon::parse($data->tanggal)->isoFormat('D MMMM Y HH:mm') ?? '-' }}
                                                         </td>
                                                         <td>{{ $data->auth ?? '-' }}
                                                         </td>

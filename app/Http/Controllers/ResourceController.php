@@ -22,11 +22,12 @@ class ResourceController extends Controller
         });
         return response()->json($dosen);
     }
-    public function accJudul(Request $request)
+    public function accJudul(Request $request, $id)
     {
-        $id_pendaftaran = $request->id;
-        $res = Pendaftaran::find($id_pendaftaran)->update(['status' => StatusValidasi::VALIDASI]);
-        return response()->json(['success' => 'Judul berhasil disetujui']);
+        $status = $request->status;
+        $res = Pendaftaran::find($id)->update(['status' => $status]);
+        // return response()->json(['success' => 'Judul berhasil divalidasi']);
+        return back();
     }
 
     public function deleteJudul($id)

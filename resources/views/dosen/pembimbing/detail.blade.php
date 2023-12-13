@@ -78,9 +78,12 @@
                                                                 class="btn btn-sm btn-primary"><i
                                                                     class="fa fa-eye"></i></a>
                                                             @if ($acc == false)
-                                                                <a href="" class="btn btn-sm btn-success confirm"
-                                                                    data-id="{{ $data->id_pendaftaran }}"><i
-                                                                        class="fa fa-check-circle"></i></a>
+                                                                @if ($data->status == StatusValidasi::BELUM_VALIDASI)
+                                                                    <a href="" data-bs-toggle="modal"
+                                                                        data-bs-target="#accJudul{{ $data->id_pendaftaran }}"
+                                                                        class="btn btn-sm btn-success confirm"><i
+                                                                            class="fa fa-check-circle"></i></a>
+                                                                @endif
                                                             @endif
                                                         </div>
                                                     </td>
@@ -123,8 +126,9 @@
 
 @foreach ($details as $row)
     @include('dosen.pembimbing.modal')
+    @include('dosen.pembimbing.acc')
 @endforeach
-<script>
+{{-- <script>
     $('.confirm').click(function(e) {
         e.preventDefault();
         let ids = $(this).attr('data-id')
@@ -161,5 +165,5 @@
             }
         });
     });
-</script>
+</script> --}}
 @endsection

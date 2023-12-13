@@ -7,6 +7,7 @@ class BimbinganStatus
     const PROSES = 1;
     const DITOLAK = 2;
     const DITERIMA = 3;
+    const REVISI = 4;
 
     public static function label($id = false): string
     {
@@ -23,6 +24,7 @@ class BimbinganStatus
             self::PROSES => "Menunggu Persetujuan",
             self::DITOLAK => "Ditolak",
             self::DITERIMA => "Diterima",
+            self::REVISI => "Revisi",
         ];
     }
 
@@ -32,6 +34,7 @@ class BimbinganStatus
             self::PROSES => 'danger',
             self::DITOLAK => 'dark',
             self::DITERIMA => 'success',
+            self::REVISI => 'primary',
 
         ];
     }

@@ -82,13 +82,9 @@ class PendaftaranController extends Controller
     {
         $logged_in_dosen = Auth::guard('dosen')->user()->id;
         $details = Pendaftaran::where('id_dosen', $logged_in_dosen)->where('nim', $nim)->latest()->paginate(5);
-        $status = [];
+        $judulAcc = Pendaftaran::where('nim', $nim)->where('status', StatusValidasi::VALIDASI)->count();
         $acc = false;
-        $arr = $details->toArray();
-        foreach ($arr['data'] as $val) {
-            $status[] = $val['status'];
-        }
-        if (in_array(StatusValidasi::VALIDASI, $status)) {
+        if ($judulAcc > 0) {
             $acc = true;
         }
         return view('dosen.pembimbing.detail', compact('details', 'acc'));

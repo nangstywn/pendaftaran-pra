@@ -8,12 +8,21 @@
     </a>
 </div>
 <div class="menu-item">
-    <a class="menu-link {{ Route::is('mahasiswa.bimbingan.*') ? 'active' : '' }}"
+    <a class="menu-link {{ Route::is('mahasiswa.bimbingan.*') && !Route::is('mahasiswa.bimbingan.report') ? 'active' : '' }}"
         href="{{ route('mahasiswa.bimbingan.index') }}">
         <span class="menu-icon">
             <span><i class="far fa-file-word fs-2x"></i></span>
         </span>
         <span class="menu-title"> Bimbingan Pra</span>
+    </a>
+</div>
+<div class="menu-item">
+    <a class="menu-link {{ Route::is('mahasiswa.bimbingan.report') ? 'active' : '' }}"
+        href="{{ route('mahasiswa.bimbingan.report') }}">
+        <span class="menu-icon">
+            <span><i class="far fa-file-alt fs-2x"></i></span>
+        </span>
+        <span class="menu-title">Laporan Bimbingan</span>
     </a>
 </div>
 <div class="menu-item">
